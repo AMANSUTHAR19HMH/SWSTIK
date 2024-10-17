@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".grain">
+    tools:context=".grain"
+    android:layout_marginBottom="40dp">>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -83,6 +84,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/grainbarlley" />
 
                 <!-- Heart Button and Count -->
@@ -148,6 +152,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/graincorn" />
 
                 <!-- Heart Button and Count -->
@@ -213,6 +220,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/graingram" />
 
@@ -281,6 +291,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/grainmustard" />
 
@@ -349,6 +362,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/grainpea" />
 
                 <!-- Heart Button and Count -->
@@ -415,6 +431,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/grainwheat" />
 
                 <LinearLayout

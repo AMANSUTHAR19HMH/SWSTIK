@@ -126,15 +126,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="page add">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Marketprice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/bidlist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/productlist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml" afterDir="false" />
+    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="farmer pages done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_freshfruits.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_freshfruits.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_grain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_grain.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_organicvegetables.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_organicvegetables.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -410,12 +407,21 @@
       <option name="project" value="LOCAL" />
       <updated>1729190152279</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="farmer pages done">
+      <option name="closed" value="true" />
+      <created>1729192079243</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729192079243</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="changes done" />
     <MESSAGE value="page add" />
-    <option name="LAST_COMMIT_MESSAGE" value="page add" />
+    <MESSAGE value="farmer pages done" />
+    <option name="LAST_COMMIT_MESSAGE" value="farmer pages done" />
   </component>
 </project>

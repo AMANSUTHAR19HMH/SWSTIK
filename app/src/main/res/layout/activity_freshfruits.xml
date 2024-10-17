@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".freshfruits">
+    tools:context=".freshfruits"
+    android:layout_marginBottom="40dp">>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -83,6 +84,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/freshapple" />
 
                 <!-- Heart Button and Count -->
@@ -148,6 +152,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/freshkiwi" />
 
                 <!-- Heart Button and Count -->
@@ -214,6 +221,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/freshmango" />
 
                 <!-- Heart Button and Count -->
@@ -282,6 +292,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/freshpineapple" />
 
                 <!-- Heart Button and Count -->
@@ -349,6 +362,9 @@
                     android:layout_height="181dp"
                     android:layout_marginTop="16dp"
                     android:scaleType="centerCrop"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:src="@drawable/freshstrwaberry" />
 
                 <!-- Heart Button and Count -->
@@ -422,6 +438,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="8dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
 
 
