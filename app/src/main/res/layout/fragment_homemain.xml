@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="80dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/farmerimm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/farmer1">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/textfarmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/farmerimm"
+            android:layout_marginTop="-79dp"
+            android:text="Agriculture Eco Farming"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="33dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textoffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textfarmer"
+            android:background="#E3E4E3"
+            android:text="What We Offer?"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoffer">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <!-- CardView for Agriculture Products -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/agriproimm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/agriproducts1" />
+
+                        <TextView
+                            android:id="@+id/agriprotext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/agriproimm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Agriculture Products"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView for Organic Products -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/organicproimm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/organic" />
+
+                        <TextView
+                            android:id="@+id/organicprotext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/organicproimm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Organic Products"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView for Fresh Veggies -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/veggiesimm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/freshvege" />
+
+                        <TextView
+                            android:id="@+id/veggiestext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/veggiesimm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Fresh Veggies"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/meetfarmerstext"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_below="@id/horizontalone"
+            android:background="#E3E4E3"
+            android:text="Meet Our Farmers"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/meetfarmerstext">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <!-- CardView for Agriculture Products -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/farmer1imm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/farmer3" />
+
+                        <TextView
+                            android:id="@+id/farer1text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/farmer1imm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Mr. Mohan Lal"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView for Organic Products -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/farmer2imm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/farmer2" />
+
+                        <TextView
+                            android:id="@+id/farmer2text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/farmer2imm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Mr. Ramesh Singh"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- CardView for Fresh Veggies -->
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    cardElevation="6dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/farmer3imm"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/farmer4" />
+
+                        <TextView
+                            android:id="@+id/farmer3text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/farmer3imm"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="Mr. Sumesh Kumar"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </RelativeLayout>
+
+</ScrollView>
