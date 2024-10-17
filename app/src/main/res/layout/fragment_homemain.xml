@@ -55,6 +55,7 @@
 
                 <!-- CardView for Agriculture Products -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAgripro"
                     cardCornerRadius="10dp"
                     cardElevation="6dp"
                     android:layout_width="150dp"
@@ -81,7 +82,7 @@
                             android:layout_below="@id/agriproimm"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Agriculture Products"
+                            android:text="Grains"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="italic" />
@@ -115,7 +116,7 @@
                             android:layout_below="@id/organicproimm"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Organic Products"
+                            android:text="Organic Vegetables"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="italic" />
@@ -150,7 +151,7 @@
                             android:layout_below="@id/veggiesimm"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="Fresh Veggies"
+                            android:text="Fresh Fruits"
                             android:textColor="@color/black"
                             android:textSize="15sp"
                             android:textStyle="italic" />

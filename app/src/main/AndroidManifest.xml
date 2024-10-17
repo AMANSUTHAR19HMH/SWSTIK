@@ -17,6 +17,22 @@
         android:theme="@style/Theme.Agrios"
         tools:targetApi="31">
         <activity
+            android:name=".farmerhomepage"
+            android:exported="false" />
+        <activity
+            android:name=".grain"
+            android:exported="false" />
+        <activity
+            android:name=".freshfruits"
+            android:exported="true" > <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity
+            android:name=".organicvegetables"
+            android:exported="true" />
+        <activity
             android:name=".farmerLoginActivity"
             android:exported="false" />
         <activity
@@ -31,11 +47,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".profile"
@@ -48,9 +60,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
