@@ -17,6 +17,15 @@
         android:theme="@style/Theme.Agrios"
         tools:targetApi="31">
         <activity
+            android:name=".Marketprice"
+            android:exported="false" />
+        <activity
+            android:name=".bidlist"
+            android:exported="false" />
+        <activity
+            android:name=".productlist"
+            android:exported="false" />
+        <activity
             android:name=".meetfarmers"
             android:exported="false" />
         <activity
@@ -51,7 +60,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".profile"
             android:exported="false" />

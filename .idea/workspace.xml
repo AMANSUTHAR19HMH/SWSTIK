@@ -5,6 +5,11 @@
       <config />
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml">
+        <config>
+          <theme>@style/Theme.Agrios</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_choice.xml">
         <config>
           <theme>@style/Theme.Agrios</theme>
@@ -50,12 +55,22 @@
           <theme>@style/Theme.Agrios</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml">
+        <config>
+          <theme>@style/Theme.Agrios</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_meetfarmers.xml">
         <config>
           <theme>@style/Theme.Agrios</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_organicvegetables.xml">
+        <config>
+          <theme>@style/Theme.Agrios</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml">
         <config>
           <theme>@style/Theme.Agrios</theme>
         </config>
@@ -111,9 +126,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="changes done">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/meetfarmers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_meetfarmers.xml" afterDir="false" />
+    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="page add">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Marketprice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/bidlist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/productlist.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
     </list>
@@ -200,6 +219,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2mmbekVLpOUFgT0CQptGnePqhZF" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -380,11 +402,20 @@
       <option name="project" value="LOCAL" />
       <updated>1729176394663</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="page add">
+      <option name="closed" value="true" />
+      <created>1729190152279</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729190152279</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="changes done" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes done" />
+    <MESSAGE value="page add" />
+    <option name="LAST_COMMIT_MESSAGE" value="page add" />
   </component>
 </project>
