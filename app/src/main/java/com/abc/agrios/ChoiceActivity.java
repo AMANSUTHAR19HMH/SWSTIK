@@ -16,5 +16,6 @@ public class ChoiceActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_choice);
 
+
     }
 }
