@@ -1,0 +1,805 @@
+Index: app/src/main/res/layout/activity_farmer_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:padding=\"16dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"16dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/login_title\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center_horizontal\"\r\n            android:layout_marginBottom=\"24dp\"\r\n            android:text=\"Farmer Login\"\r\n            android:textSize=\"24sp\"\r\n            android:textColor=\"@color/main\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_username\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Username\"\r\n            android:inputType=\"text\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_password\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"24dp\"\r\n            android:hint=\"Password\"\r\n            android:inputType=\"textPassword\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_login\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:backgroundTint=\"@color/main\"\r\n            android:text=\"Login\" />\r\n    </LinearLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_farmer_login.xml b/app/src/main/res/layout/activity_farmer_login.xml
+--- a/app/src/main/res/layout/activity_farmer_login.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_farmer_login.xml	(date 1729196062725)
+@@ -6,25 +6,34 @@
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
++        android:layout_height="match_parent"
+         android:orientation="vertical"
+         android:padding="16dp">
+ 
++        <ImageView
++            android:layout_width="100dp"
++            android:layout_height="100dp"
++            android:layout_gravity="center_horizontal"
++            android:layout_marginTop="40dp"
++            android:src="@drawable/logobackground" />
++
+         <TextView
+             android:id="@+id/login_title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
++
+             android:layout_gravity="center_horizontal"
+             android:layout_marginBottom="24dp"
+             android:text="Farmer Login"
++            android:textColor="@color/main"
+             android:textSize="24sp"
+-            android:textColor="@color/main"
+             android:textStyle="bold" />
+ 
+         <EditText
+             android:id="@+id/et_username"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
++            android:layout_marginTop="35dp"
+             android:layout_marginBottom="16dp"
+             android:hint="Username"
+             android:inputType="text" />
+@@ -43,5 +52,18 @@
+             android:layout_height="wrap_content"
+             android:backgroundTint="@color/main"
+             android:text="Login" />
++
++        <TextView
++            android:id="@+id/tv_dont_have_account"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="50dp"
++            android:layout_marginBottom="30dp"
++            android:gravity="end"
++            android:text="Don't have an account? Sign up"
++            android:textAllCaps="true"
++            android:textColor="@color/main"
++            android:textSize="16sp"
++            android:textStyle="bold" />
+     </LinearLayout>
+ </ScrollView>
+Index: app/src/main/java/com/abc/agrios/FarmerLoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.abc.agrios;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.text.TextUtils;\r\nimport android.util.Log;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.abc.agrios.apiInterface.AuthApi;\r\nimport com.abc.agrios.instance.ApiClient;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic class FarmerLoginActivity extends AppCompatActivity {\r\n\r\n    private EditText etUsername, etPassword;\r\n    private Button btnLogin;\r\n    private AuthApi apiService;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_farmer_login);\r\n\r\n\r\n        etUsername = findViewById(R.id.et_username);\r\n        etPassword = findViewById(R.id.et_password);\r\n        btnLogin = findViewById(R.id.btn_login);\r\n\r\n\r\n        apiService = ApiClient.getClient().create(AuthApi.class);\r\n\r\n        // Set login button click listener\r\n        btnLogin.setOnClickListener(v -> loginFarmer());\r\n    }\r\n\r\n    private void loginFarmer() {\r\n        String username = etUsername.getText().toString().trim();\r\n        String password = etPassword.getText().toString().trim();\r\n\r\n        // Validate input\r\n        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {\r\n            Toast.makeText(this, \"Both fields are required\", Toast.LENGTH_SHORT).show();\r\n            return;\r\n        }\r\n\r\n        // Make login request\r\n        LoginRequestF loginRequest = new LoginRequestF(username, password);\r\n\r\n        apiService.loginFarmer(loginRequest).enqueue(new Callback<LoginResponseF>() {\r\n            @Override\r\n            public void onResponse(Call<LoginResponseF> call, Response<LoginResponseF> response) {\r\n                if (response.isSuccessful() && response.body() != null) {\r\n                    String token = response.body().getToken();\r\n                    Toast.makeText(FarmerLoginActivity.this, \"Login Successful\", Toast.LENGTH_SHORT).show();\r\n\r\n                    // Save token or proceed to next screen\r\n                    Intent intent = new Intent(FarmerLoginActivity.this, farmerhomepage.class);\r\n                    intent.putExtra(\"TOKEN\", token);\r\n                    startActivity(intent);\r\n                    finish();\r\n                } else {\r\n                    Toast.makeText(FarmerLoginActivity.this, \"Invalid Credentials\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<LoginResponseF> call, Throwable t) {\r\n                Log.e(\"LoginError\", \"API Call Failed\", t);\r\n                Toast.makeText(FarmerLoginActivity.this, \"Login Failed: \" + t.getMessage(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java b/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java
+--- a/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java	(date 1729196732263)
+@@ -4,8 +4,10 @@
+ import android.os.Bundle;
+ import android.text.TextUtils;
+ import android.util.Log;
++import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
++import android.widget.TextView;
+ import android.widget.Toast;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -21,14 +23,14 @@
+ 
+     private EditText etUsername, etPassword;
+     private Button btnLogin;
++    private TextView tvSignUp;
+     private AuthApi apiService;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_farmer_login);
+-
+-
++        tvSignUp = findViewById(R.id.tv_dont_have_account);
+         etUsername = findViewById(R.id.et_username);
+         etPassword = findViewById(R.id.et_password);
+         btnLogin = findViewById(R.id.btn_login);
+@@ -36,8 +38,16 @@
+ 
+         apiService = ApiClient.getClient().create(AuthApi.class);
+ 
+-        // Set login button click listener
++
+         btnLogin.setOnClickListener(v -> loginFarmer());
++        tvSignUp.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++
++                startActivity(new Intent(FarmerLoginActivity.this, FarmerSignupActivity.class));
++
++            }
++        });
+     }
+ 
+     private void loginFarmer() {
+Index: app/src/main/java/com/abc/agrios/homeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.abc.agrios;\r\n\r\nimport android.annotation.SuppressLint;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\npublic class homeActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        loadFragment(new homemain());\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_home);\r\n        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);\r\n        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {\r\n            @SuppressLint(\"NonConstantResourceId\")\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                Fragment selectedFragment = null;\r\n//                View layout = findViewById(R.id.profile);\r\n                if (item.getItemId() == R.id.nav_home) {\r\n                    selectedFragment = new homemain();\r\n                }\r\n                if (item.getItemId() == R.id.nav_menu) {\r\n                    selectedFragment = new menuFragment();\r\n                }\r\n                if (item.getItemId() == R.id.nav_cart) {\r\n                    selectedFragment = new cartFragment();\r\n                } else if (item.getItemId() == R.id.nav_profile) {\r\n                    Intent menuIntent = new Intent(homeActivity.this, profile.class);\r\n                    startActivity(menuIntent);\r\n                    return true;\r\n                } else if (item.getItemId() == R.id.nav_settings) {\r\n                    Intent menuIntent = new Intent(homeActivity.this, settingsActivity.class);\r\n                    startActivity(menuIntent);\r\n                    return true;\r\n                }\r\n                if (selectedFragment != null) {\r\n                    loadFragment(selectedFragment);\r\n                }\r\n                return true;\r\n            }\r\n        });\r\n    }\r\n\r\n    private void loadFragment(Fragment fragment) {\r\n        getSupportFragmentManager()\r\n                .beginTransaction()\r\n                .replace(R.id.fragment_container, fragment)  // Use your actual container ID\r\n                .commit();\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/homeActivity.java b/app/src/main/java/com/abc/agrios/homeActivity.java
+--- a/app/src/main/java/com/abc/agrios/homeActivity.java	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/java/com/abc/agrios/homeActivity.java	(date 1729197166826)
+@@ -36,9 +36,7 @@
+                 if (item.getItemId() == R.id.nav_cart) {
+                     selectedFragment = new cartFragment();
+                 } else if (item.getItemId() == R.id.nav_profile) {
+-                    Intent menuIntent = new Intent(homeActivity.this, profile.class);
+-                    startActivity(menuIntent);
+-                    return true;
++                    selectedFragment = new profileFargment();
+                 } else if (item.getItemId() == R.id.nav_settings) {
+                     Intent menuIntent = new Intent(homeActivity.this, settingsActivity.class);
+                     startActivity(menuIntent);
+Index: app/src/main/res/layout/activity_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <RelativeLayout\r\n        android:id=\"@+id/maintext\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/main\">\r\n\r\n\r\n        <TextView\r\n            android:id=\"@+id/headingname\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:background=\"@color/main\"\r\n            android:padding=\"20dp\"\r\n            android:text=\"SWSTIK\"\r\n            android:textColor=\"@color/white\"\r\n            android:textSize=\"35sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <RelativeLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@+id/headingname\"\r\n            android:background=\"@color/white\">\r\n\r\n            <LinearLayout\r\n                android:id=\"@+id/linear_layoutprofile\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/white\"\r\n                android:gravity=\"center_vertical\"\r\n                android:padding=\"20dp\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"30dp\"\r\n                    android:layout_height=\"30dp\"\r\n                    android:layout_below=\"@+id/headingname\"\r\n                    android:src=\"@drawable/profile\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginStart=\"10dp\"\r\n                    android:text=\"Hello,  \"\r\n                    android:textSize=\"17sp\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/agritext\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"Name\"\r\n                    android:textSize=\"17sp\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:id=\"@+id/button1Layout\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_below=\"@+id/linear_layoutprofile\"\r\n                android:layout_alignParentStart=\"true\"\r\n                android:layout_marginStart=\"20dp\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:background=\"@color/white\"\r\n                android:gravity=\"center\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_buy_again\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n\r\n                    android:layout_marginBottom=\"16dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:padding=\"12dp\"\r\n                    android:text=\"Buy Again\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"16sp\" />\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_your_lists\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:hapticFeedbackEnabled=\"true\"\r\n                    android:padding=\"12dp\"\r\n                    android:text=\"Your Lists\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"16sp\" />\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_below=\"@+id/linear_layoutprofile\"\r\n                android:layout_alignParentEnd=\"true\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:layout_toEndOf=\"@+id/button1Layout\"\r\n                android:background=\"@color/white\"\r\n                android:gravity=\"center\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_your_account\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_marginBottom=\"16dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:padding=\"12dp\"\r\n                    android:text=\"Your Account\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"16sp\" />\r\n\r\n\r\n                <Button\r\n                    android:id=\"@+id/btn_your_orders\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:padding=\"12dp\"\r\n                    android:text=\"Your Orders\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"16sp\" />\r\n            </LinearLayout>\r\n        </RelativeLayout>\r\n    </RelativeLayout>\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_profile.xml b/app/src/main/res/layout/activity_profile.xml
+--- a/app/src/main/res/layout/activity_profile.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_profile.xml	(date 1729194957045)
+@@ -9,23 +9,37 @@
+         android:layout_height="wrap_content"
+         android:background="@color/main">
+ 
++        <LinearLayout
++            android:id="@+id/headd"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="20dp"
++            android:background="@color/main">
++
++            <ImageView
++                android:layout_width="100dp"
++                android:layout_height="100dp"
++                android:layout_gravity="center_horizontal"
++                android:src="@drawable/logobackground" />
+ 
+-        <TextView
+-            android:id="@+id/headingname"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="20dp"
+-            android:background="@color/main"
+-            android:padding="20dp"
+-            android:text="SWSTIK"
+-            android:textColor="@color/white"
+-            android:textSize="35sp"
+-            android:textStyle="bold" />
++            <TextView
++                android:id="@+id/headingname"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="13dp"
++                android:background="@color/main"
++                android:padding="20dp"
++                android:text="SWSTIK"
++
++                android:textColor="@color/white"
++                android:textSize="24sp"
++                android:textStyle="bold" />
++        </LinearLayout>
+ 
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:layout_below="@+id/headingname"
++            android:layout_below="@+id/headd"
+             android:background="@color/white">
+ 
+             <LinearLayout
+@@ -104,7 +118,6 @@
+                 android:background="@color/white"
+                 android:gravity="center"
+                 android:orientation="vertical">
+-
+                 <Button
+                     android:id="@+id/btn_your_account"
+                     android:layout_width="150dp"
+@@ -116,7 +129,6 @@
+                     android:textColor="@color/white"
+                     android:textSize="16sp" />
+ 
+-
+                 <Button
+                     android:id="@+id/btn_your_orders"
+                     android:layout_width="150dp"
+Index: app/src/main/java/com/abc/agrios/ChoiceActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.abc.agrios;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\n\r\npublic class ChoiceActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_choice);\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/ChoiceActivity.java b/app/src/main/java/com/abc/agrios/ChoiceActivity.java
+--- a/app/src/main/java/com/abc/agrios/ChoiceActivity.java	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/java/com/abc/agrios/ChoiceActivity.java	(date 1729195541061)
+@@ -1,21 +1,27 @@
+ package com.abc.agrios;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
++import android.widget.Button;
+ 
+ import androidx.activity.EdgeToEdge;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.core.graphics.Insets;
+-import androidx.core.view.ViewCompat;
+-import androidx.core.view.WindowInsetsCompat;
+ 
+ public class ChoiceActivity extends AppCompatActivity {
++    Button farmer, buyer;
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         EdgeToEdge.enable(this);
+         setContentView(R.layout.activity_choice);
+-
+-
++        farmer = findViewById(R.id.farmer1);
++        buyer = findViewById(R.id.buyer1);
++        farmer.setOnClickListener(v -> {
++            startActivity(new Intent(ChoiceActivity.this, FarmerLoginActivity.class));
++        });
++        buyer.setOnClickListener(v -> {
++            startActivity(new Intent(ChoiceActivity.this, LoginActivity.class));
++        });
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/abc/agrios/FarmerSignupActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.abc.agrios;\r\n\r\nimport android.os.Bundle;\r\nimport android.text.TextUtils;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.abc.agrios.apiInterface.AuthApi;\r\nimport com.abc.agrios.instance.ApiClient;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\n\r\npublic class FarmerSignupActivity extends AppCompatActivity {\r\n\r\n    private EditText etUsername, etName, etMobile, etEmail, etPassword, etPincode;\r\n    private EditText etStreet, etCity, etState, etCountry;\r\n    private Button btnRegister;\r\n    private AuthApi apiService;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_farmer_signup);\r\n\r\n        // Initialize UI elements\r\n        etUsername = findViewById(R.id.et_username);\r\n        etName = findViewById(R.id.et_name);\r\n        etMobile = findViewById(R.id.et_mobile);\r\n        etEmail = findViewById(R.id.et_email);\r\n        etPassword = findViewById(R.id.et_password);\r\n        etPincode = findViewById(R.id.et_pincode);\r\n        etStreet = findViewById(R.id.et_street);\r\n        etCity = findViewById(R.id.et_city);\r\n        etState = findViewById(R.id.et_state);\r\n        etCountry = findViewById(R.id.et_country);\r\n        btnRegister = findViewById(R.id.btn_register);\r\n\r\n        apiService = ApiClient.getClient().create(AuthApi.class);\r\n\r\n        btnRegister.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                registerFarmer();\r\n            }\r\n        });\r\n    }\r\n\r\n    private void registerFarmer() {\r\n        String username = etUsername.getText().toString().trim();\r\n        String name = etName.getText().toString().trim();\r\n        String mobile = etMobile.getText().toString().trim();\r\n        String email = etEmail.getText().toString().trim();\r\n        String password = etPassword.getText().toString().trim();\r\n        String pincode = etPincode.getText().toString().trim();\r\n        String street = etStreet.getText().toString().trim();\r\n        String city = etCity.getText().toString().trim();\r\n        String state = etState.getText().toString().trim();\r\n        String country = etCountry.getText().toString().trim();\r\n\r\n        // Validate required fields\r\n        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(name) || TextUtils.isEmpty(mobile) ||\r\n                TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(pincode)) {\r\n            Toast.makeText(this, \"All fields are required\", Toast.LENGTH_SHORT).show();\r\n            return;\r\n        }\r\n\r\n        // Create Address and Farmer objects\r\n        Address address = new Address(street, city, state, country, pincode);\r\n        Farmer farmer = new Farmer(username, password, email, mobile, name, pincode, \"farmer\", address);\r\n\r\n        // Make the API call with Retrofit\r\n        apiService.registerFarmer(farmer).enqueue(new Callback<Void>() {\r\n            @Override\r\n            public void onResponse(Call<Void> call, Response<Void> response) {\r\n                if (response.isSuccessful()) {\r\n                    Toast.makeText(FarmerSignupActivity.this, \"Registration Successful\", Toast.LENGTH_SHORT).show();\r\n                } else {\r\n                    // Log error details\r\n                    Log.e(\"RegisterError\", \"Response Code: \" + response.code());\r\n                    try {\r\n                        String errorBody = response.errorBody().string();\r\n                        Log.e(\"RegisterError\", \"Error Body: \" + errorBody);\r\n                    } catch (Exception e) {\r\n                        Log.e(\"RegisterError\", \"Exception while reading error body\", e);\r\n                    }\r\n                    Toast.makeText(FarmerSignupActivity.this, \"Registration Failed\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<Void> call, Throwable t) {\r\n                Log.e(\"RegisterError\", \"API Call Failed\", t);\r\n                Toast.makeText(FarmerSignupActivity.this, \"Error: \" + t.getMessage(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java b/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java
+--- a/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java	(date 1729196511006)
+@@ -1,11 +1,13 @@
+ package com.abc.agrios;
+ 
++import android.content.Intent;
+ import android.os.Bundle;
+ import android.text.TextUtils;
+ import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
++import android.widget.TextView;
+ import android.widget.Toast;
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+@@ -21,6 +23,7 @@
+ 
+     private EditText etUsername, etName, etMobile, etEmail, etPassword, etPincode;
+     private EditText etStreet, etCity, etState, etCountry;
++    private TextView tvLogin;
+     private Button btnRegister;
+     private AuthApi apiService;
+ 
+@@ -30,6 +33,7 @@
+         setContentView(R.layout.activity_farmer_signup);
+ 
+         // Initialize UI elements
++        tvLogin = findViewById(R.id.tvLoginfarmer);
+         etUsername = findViewById(R.id.et_username);
+         etName = findViewById(R.id.et_name);
+         etMobile = findViewById(R.id.et_mobile);
+@@ -50,6 +54,9 @@
+                 registerFarmer();
+             }
+         });
++        tvLogin.setOnClickListener(v -> {
++            startActivity(new Intent(FarmerSignupActivity.this, FarmerLoginActivity.class));
++        });
+     }
+ 
+     private void registerFarmer() {
+Index: app/src/main/res/layout/activity_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/main\">\r\n\r\n\r\n        <com.google.android.material.appbar.AppBarLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/main\"\r\n                android:title=\"Header Title\"\r\n                app:menu=\"@menu/appbar\"\r\n                app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"40dp\"\r\n                    android:layout_height=\"40dp\"\r\n                    android:src=\"@drawable/logo\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:padding=\"20dp\"\r\n                    android:text=\"Apna Kisan Apna Bazar\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textStyle=\"bold\" />\r\n            </androidx.appcompat.widget.Toolbar>\r\n\r\n        </com.google.android.material.appbar.AppBarLayout>\r\n    </RelativeLayout>\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/fragment_container\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_below=\"@id/toolbar\"\r\n        android:layout_marginTop=\"94.4dp\" />\r\n\r\n\r\n    <!-- BottomNavigationView at the bottom -->\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottom_navigation\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"bottom\"\r\n        android:background=\"@color/main\"\r\n        android:defaultFocusHighlightEnabled=\"true\"\r\n        app:itemRippleColor=\"@color/white\"\r\n        app:itemTextColor=\"@color/black\"\r\n        app:menu=\"@menu/menuitem\" />\r\n\r\n</androidx.coordinatorlayout.widget.CoordinatorLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_home.xml b/app/src/main/res/layout/activity_home.xml
+--- a/app/src/main/res/layout/activity_home.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_home.xml	(date 1729194500872)
+@@ -27,7 +27,7 @@
+                 <ImageView
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+-                    android:src="@drawable/logo" />
++                    android:src="@drawable/logoappbart" />
+ 
+                 <TextView
+                     android:layout_width="wrap_content"
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AndroidLayouts\">\r\n    <shared>\r\n      <config />\r\n    </shared>\r\n    <layouts>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_choice.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_login.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_signup.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_farmerhomepage.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_freshfruits.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_grain.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_loginpage.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_organicvegetables.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/activity_signuppage.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/fragment_cart.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/fragment_homemain.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/layout/fragment_menu.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/menu/appbar.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/menu/menuitem.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n      <layout url=\"file://$PROJECT_DIR$/app/src/main/res/xml/preferences.xml\">\r\n        <config>\r\n          <theme>@style/Theme.Agrios</theme>\r\n        </config>\r\n      </layout>\r\n    </layouts>\r\n  </component>\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"NONE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9a529238-658c-4fa4-b19c-a7aaf5a5a6ed\" name=\"Changes\" comment=\"changes done\">\r\n      <change afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Address.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Farmer.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginRequestF.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginResponseF.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_activity_activity_ktx_1_9_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_activity_activity_ktx_1_9_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_4_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_4_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_7_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_7_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_7_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_7_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_2_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_2_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_13_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_13_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_13_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_13_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_1_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_1_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_5_4_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_5_4_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_ktx_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_ktx_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_ktx_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_ktx_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_savedstate_2_6_2_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_savedstate_2_6_2_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_1_2_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_1_2_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_2_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_2_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_6_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_6_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_2_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_2_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_tracing_tracing_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_tracing_tracing_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_transition_transition_1_5_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_transition_transition_1_5_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_datatransport_transport_api_2_2_1_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_datatransport_transport_api_2_2_1_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_18_5_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_18_5_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_18_4_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_18_4_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_12_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_12_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_components_16_1_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_components_16_1_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_encoders_json_17_1_0_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_encoders_json_17_1_0_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_mlkit_translate_17_0_3_aar.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Gradle__com_google_mlkit_translate_17_0_3_aar.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules/app/agrios.app.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/modules/app/agrios.app.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules/app/agrios.app.main.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/modules/app/agrios.app.main.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/AndroidManifest.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/AndroidManifest.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/ChoiceActivity.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/ChoiceActivity.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/apiInterface/AuthApi.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/apiInterface/AuthApi.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerLoginActivity.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerSignupActivity.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerhomepage.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerhomepage.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_login.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_login.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_signup.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_signup.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmerhomepage.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/app/src/main/res/layout/activity_farmerhomepage.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/local.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/local.properties\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"ExecutionTargetManager\" SELECTED_TARGET=\"device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=291e2c87)]\" />\r\n  <component name=\"ExternalProjectsData\">\r\n    <projectState path=\"$PROJECT_DIR$\">\r\n      <ProjectState />\r\n    </projectState>\r\n  </component>\r\n  <component name=\"ExternalProjectsManager\">\r\n    <system id=\"GRADLE\">\r\n      <state>\r\n        <task path=\"$PROJECT_DIR$/app\">\r\n          <activation />\r\n        </task>\r\n        <projects_view>\r\n          <tree_state>\r\n            <expand />\r\n            <select />\r\n          </tree_state>\r\n        </projects_view>\r\n      </state>\r\n    </system>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"resourceFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;amansuthar19&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/AMANSUTHAR19HMH/SWSTIK.git&quot;,\r\n    &quot;accountId&quot;: &quot;1803cde9-3681-49a6-9511-3a10f75be965&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 7\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2mmbekVLpOUFgT0CQptGnePqhZF\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Android App.app.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\r\n    \"RunOnceActivity.readMode.enableVisualFormatting\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"cf.first.check.clang-format\": \"false\",\r\n    \"cidr.known.project.marker\": \"true\",\r\n    \"com.google.services.firebase.aqiPopupShown\": \"true\",\r\n    \"dart.analysis.tool.window.visible\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_directory_selection\": \"C:/Users/Asus/JECRC PROJECT SWSTIK/agrios/app/src/main/res/drawable\",\r\n    \"last_opened_file_path\": \"C:/Users/Asus/AndroidStudioProjects/SWSTIK\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.17\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"settings.editor.selected.configurable\": \"device.mirroring\",\r\n    \"show.do.not.copy.http.proxy.settings.to.gradle\": \"true\",\r\n    \"show.migrate.to.gradle.popup\": \"false\"\r\n  }\r\n}]]></component>\r\n  <component name=\"PsdUISettings\">\r\n    <option name=\"MODULE_TAB\" value=\"Default Config\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Asus\\JECRC PROJECT SWSTIK\\agrios\\app\\src\\main\\res\\drawable\" />\r\n      <recent name=\"C:\\Users\\Asus\\JECRC PROJECT SWSTIK\\agrios\\app\\src\\main\\res\\layout\" />\r\n      <recent name=\"C:\\Users\\Asus\\JECRC PROJECT SWSTIK\\agrios\\app\\src\\main\\java\\com\\abc\\agrios\" />\r\n      <recent name=\"C:\\Users\\Asus\\JECRC PROJECT SWSTIK\\agrios\\app\\src\\main\\res\\values\" />\r\n      <recent name=\"C:\\Users\\Asus\\JECRC PROJECT SWSTIK\\agrios\\app\\src\\main\\res\\menu\" />\r\n    </key>\r\n    <key name=\"android.template.-140737501\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n    <key name=\"android.template.650783886\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n    <key name=\"android.template.1183621520\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\swstik\\SWSTIK\\app\\src\\main\\res\\drawable\" />\r\n    </key>\r\n    <key name=\"android.template.576545424\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n    <key name=\"android.template.-165864657\">\r\n      <recent name=\"com.abc.agrios\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"app\" type=\"AndroidRunConfigurationType\" factoryName=\"Android App\">\r\n      <module name=\"agrios.app.main\" />\r\n      <option name=\"DEPLOY\" value=\"true\" />\r\n      <option name=\"DEPLOY_APK_FROM_BUNDLE\" value=\"false\" />\r\n      <option name=\"DEPLOY_AS_INSTANT\" value=\"false\" />\r\n      <option name=\"ARTIFACT_NAME\" value=\"\" />\r\n      <option name=\"PM_INSTALL_OPTIONS\" value=\"\" />\r\n      <option name=\"ALL_USERS\" value=\"false\" />\r\n      <option name=\"ALWAYS_INSTALL_WITH_PM\" value=\"false\" />\r\n      <option name=\"CLEAR_APP_STORAGE\" value=\"false\" />\r\n      <option name=\"DYNAMIC_FEATURES_DISABLED_LIST\" value=\"\" />\r\n      <option name=\"ACTIVITY_EXTRA_FLAGS\" value=\"\" />\r\n      <option name=\"MODE\" value=\"default_activity\" />\r\n      <option name=\"RESTORE_ENABLED\" value=\"false\" />\r\n      <option name=\"RESTORE_FILE\" value=\"\" />\r\n      <option name=\"CLEAR_LOGCAT\" value=\"false\" />\r\n      <option name=\"SHOW_LOGCAT_AUTOMATICALLY\" value=\"false\" />\r\n      <option name=\"TARGET_SELECTION_MODE\" value=\"DEVICE_AND_SNAPSHOT_COMBO_BOX\" />\r\n      <option name=\"SELECTED_CLOUD_MATRIX_CONFIGURATION_ID\" value=\"-1\" />\r\n      <option name=\"SELECTED_CLOUD_MATRIX_PROJECT_ID\" value=\"\" />\r\n      <option name=\"DEBUGGER_TYPE\" value=\"Auto\" />\r\n      <Auto>\r\n        <option name=\"USE_JAVA_AWARE_DEBUGGER\" value=\"false\" />\r\n        <option name=\"SHOW_STATIC_VARS\" value=\"true\" />\r\n        <option name=\"WORKING_DIR\" value=\"\" />\r\n        <option name=\"TARGET_LOGGING_CHANNELS\" value=\"lldb process:gdb-remote packets\" />\r\n        <option name=\"SHOW_OPTIMIZED_WARNING\" value=\"true\" />\r\n        <option name=\"ATTACH_ON_WAIT_FOR_DEBUGGER\" value=\"false\" />\r\n        <option name=\"DEBUG_SANDBOX_SDK\" value=\"false\" />\r\n      </Auto>\r\n      <Hybrid>\r\n        <option name=\"USE_JAVA_AWARE_DEBUGGER\" value=\"false\" />\r\n        <option name=\"SHOW_STATIC_VARS\" value=\"true\" />\r\n        <option name=\"WORKING_DIR\" value=\"\" />\r\n        <option name=\"TARGET_LOGGING_CHANNELS\" value=\"lldb process:gdb-remote packets\" />\r\n        <option name=\"SHOW_OPTIMIZED_WARNING\" value=\"true\" />\r\n        <option name=\"ATTACH_ON_WAIT_FOR_DEBUGGER\" value=\"false\" />\r\n        <option name=\"DEBUG_SANDBOX_SDK\" value=\"false\" />\r\n      </Hybrid>\r\n      <Java>\r\n        <option name=\"ATTACH_ON_WAIT_FOR_DEBUGGER\" value=\"false\" />\r\n        <option name=\"DEBUG_SANDBOX_SDK\" value=\"false\" />\r\n      </Java>\r\n      <Native>\r\n        <option name=\"USE_JAVA_AWARE_DEBUGGER\" value=\"false\" />\r\n        <option name=\"SHOW_STATIC_VARS\" value=\"true\" />\r\n        <option name=\"WORKING_DIR\" value=\"\" />\r\n        <option name=\"TARGET_LOGGING_CHANNELS\" value=\"lldb process:gdb-remote packets\" />\r\n        <option name=\"SHOW_OPTIMIZED_WARNING\" value=\"true\" />\r\n        <option name=\"ATTACH_ON_WAIT_FOR_DEBUGGER\" value=\"false\" />\r\n        <option name=\"DEBUG_SANDBOX_SDK\" value=\"false\" />\r\n      </Native>\r\n      <Profilers>\r\n        <option name=\"ADVANCED_PROFILING_ENABLED\" value=\"false\" />\r\n        <option name=\"STARTUP_PROFILING_ENABLED\" value=\"false\" />\r\n        <option name=\"STARTUP_CPU_PROFILING_ENABLED\" value=\"false\" />\r\n        <option name=\"STARTUP_CPU_PROFILING_CONFIGURATION_NAME\" value=\"Java/Kotlin Method Sample (legacy)\" />\r\n        <option name=\"STARTUP_NATIVE_MEMORY_PROFILING_ENABLED\" value=\"false\" />\r\n        <option name=\"NATIVE_MEMORY_SAMPLE_RATE_BYTES\" value=\"2048\" />\r\n      </Profilers>\r\n      <option name=\"DEEP_LINK\" value=\"\" />\r\n      <option name=\"ACTIVITY_CLASS\" value=\"\" />\r\n      <option name=\"SEARCH_ACTIVITY_IN_GLOBAL_SCOPE\" value=\"false\" />\r\n      <option name=\"SKIP_ACTIVITY_VALIDATION\" value=\"false\" />\r\n      <method v=\"2\">\r\n        <option name=\"Android.Gradle.BeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9a529238-658c-4fa4-b19c-a7aaf5a5a6ed\" name=\"Changes\" comment=\"\" />\r\n      <created>1727684795378</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1727684795378</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"changes done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729136653635</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729136653635</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"changes done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729136758264</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729136758264</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"changes done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729137047067</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729137047068</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"changes done\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1729175835548</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1729175835548</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"5\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"changes done\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"changes done\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/.idea/workspace.xml	(date 1729197182020)
+@@ -5,6 +5,11 @@
+       <config />
+     </shared>
+     <layouts>
++      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml">
++        <config>
++          <theme>@style/Theme.Agrios</theme>
++        </config>
++      </layout>
+       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_choice.xml">
+         <config>
+           <theme>@style/Theme.Agrios</theme>
+@@ -50,11 +55,26 @@
+           <theme>@style/Theme.Agrios</theme>
+         </config>
+       </layout>
++      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml">
++        <config>
++          <theme>@style/Theme.Agrios</theme>
++        </config>
++      </layout>
++      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_meetfarmers.xml">
++        <config>
++          <theme>@style/Theme.Agrios</theme>
++        </config>
++      </layout>
+       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_organicvegetables.xml">
+         <config>
+           <theme>@style/Theme.Agrios</theme>
+         </config>
+       </layout>
++      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml">
++        <config>
++          <theme>@style/Theme.Agrios</theme>
++        </config>
++      </layout>
+       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml">
+         <config>
+           <theme>@style/Theme.Agrios</theme>
+@@ -81,6 +101,11 @@
+         </config>
+       </layout>
+       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_menu.xml">
++        <config>
++          <theme>@style/Theme.Agrios</theme>
++        </config>
++      </layout>
++      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_profile_fargment.xml">
+         <config>
+           <theme>@style/Theme.Agrios</theme>
+         </config>
+@@ -106,61 +131,33 @@
+     <option name="autoReloadType" value="NONE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="changes done">
+-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Address.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/Farmer.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginRequestF.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginResponseF.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_activity_activity_ktx_1_9_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_activity_activity_ktx_1_9_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_4_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_annotation_annotation_experimental_1_4_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_7_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_1_7_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_7_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_appcompat_appcompat_resources_1_7_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_2_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_arch_core_core_runtime_2_2_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_coordinatorlayout_coordinatorlayout_1_1_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_13_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_1_13_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_13_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_core_core_ktx_1_13_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_cursoradapter_cursoradapter_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_1_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_drawerlayout_drawerlayout_1_1_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_dynamicanimation_dynamicanimation_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_5_4_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_fragment_fragment_1_5_4_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_core_utils_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_ktx_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_livedata_core_ktx_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_runtime_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_ktx_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_ktx_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_savedstate_2_6_2_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_lifecycle_lifecycle_viewmodel_savedstate_2_6_2_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_localbroadcastmanager_localbroadcastmanager_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_1_2_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_preference_preference_1_2_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_print_print_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_recyclerview_recyclerview_1_1_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_2_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_savedstate_savedstate_1_2_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_6_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_core_1_6_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_2_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_test_ext_junit_1_2_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_tracing_tracing_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_tracing_tracing_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_transition_transition_1_5_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_transition_transition_1_5_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_viewpager_viewpager_1_0_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_datatransport_transport_api_2_2_1_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_datatransport_transport_api_2_2_1_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_18_5_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_18_5_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_18_4_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_18_4_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_12_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_material_material_1_12_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_components_16_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_components_16_1_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_encoders_json_17_1_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_firebase_firebase_encoders_json_17_1_0_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_mlkit_translate_17_0_3_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_mlkit_translate_17_0_3_aar.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/agrios.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/agrios.app.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/agrios.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/agrios.app.main.iml" afterDir="false" />
++    <list default="true" id="9a529238-658c-4fa4-b19c-a7aaf5a5a6ed" name="Changes" comment="farmer  authentication done">
++      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/profileFargment.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logoappbart.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logobackground.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile_fargment.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/ChoiceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/ChoiceActivity.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/apiInterface/AuthApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/apiInterface/AuthApi.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerLoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerSignupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerhomepage.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/farmerhomepage.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerLoginActivity.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/FarmerSignupActivity.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/LoginActivity.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/homeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/abc/agrios/homeActivity.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_bidlist.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_choice.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_choice.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_login.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmer_signup.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmerhomepage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_farmerhomepage.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_grain.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_grain.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_loginpage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_loginpage.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_marketprice.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_meetfarmers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_meetfarmers.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_productlist.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_signuppage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_signuppage.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -170,7 +167,7 @@
+   <component name="ClangdSettings">
+     <option name="formatViaClangd" value="false" />
+   </component>
+-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=291e2c87)]" />
++  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Asus\.android\avd\Pixel_8_Pro_API_34.avd)]" />
+   <component name="ExternalProjectsData">
+     <projectState path="$PROJECT_DIR$">
+       <ProjectState />
+@@ -240,8 +237,8 @@
+     "git-widget-placeholder": "main",
+     "ignore.virus.scanning.warn.message": "true",
+     "kotlin-language-version-configured": "true",
+-    "last_directory_selection": "C:/Users/Asus/JECRC PROJECT SWSTIK/agrios/app/src/main/res/drawable",
+-    "last_opened_file_path": "C:/Users/Asus/AndroidStudioProjects/SWSTIK",
++    "last_directory_selection": "C:/Users/Asus/AndroidStudioProjects/SWSTIK/app/src/main/res/drawable",
++    "last_opened_file_path": "C:/Users/Asus/AndroidStudioProjects/SWSTIK/app/src/main/res/drawable",
+     "project.structure.last.edited": "Modules",
+     "project.structure.proportion": "0.17",
+     "project.structure.side.proportion": "0.2",
+@@ -258,11 +255,11 @@
+       <recent name="com.abc.agrios" />
+     </key>
+     <key name="CopyFile.RECENT_KEYS">
++      <recent name="C:\Users\Asus\AndroidStudioProjects\SWSTIK\app\src\main\res\drawable" />
+       <recent name="C:\Users\Asus\JECRC PROJECT SWSTIK\agrios\app\src\main\res\drawable" />
+       <recent name="C:\Users\Asus\JECRC PROJECT SWSTIK\agrios\app\src\main\res\layout" />
+       <recent name="C:\Users\Asus\JECRC PROJECT SWSTIK\agrios\app\src\main\java\com\abc\agrios" />
+       <recent name="C:\Users\Asus\JECRC PROJECT SWSTIK\agrios\app\src\main\res\values" />
+-      <recent name="C:\Users\Asus\JECRC PROJECT SWSTIK\agrios\app\src\main\res\menu" />
+     </key>
+     <key name="android.template.-140737501">
+       <recent name="com.abc.agrios" />
+@@ -275,6 +272,9 @@
+     </key>
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="D:\swstik\SWSTIK\app\src\main\res\drawable" />
++    </key>
++    <key name="android.template.930852132">
++      <recent name="com.abc.agrios" />
+     </key>
+     <key name="android.template.576545424">
+       <recent name="com.abc.agrios" />
+@@ -394,11 +394,20 @@
+       <option name="project" value="LOCAL" />
+       <updated>1729175835548</updated>
+     </task>
+-    <option name="localTasksCounter" value="5" />
++    <task id="LOCAL-00005" summary="farmer  authentication done">
++      <option name="closed" value="true" />
++      <created>1729192122776</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1729192122776</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="changes done" />
+-    <option name="LAST_COMMIT_MESSAGE" value="changes done" />
++    <MESSAGE value="farmer  authentication done" />
++    <option name="LAST_COMMIT_MESSAGE" value="farmer  authentication done" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/modules/app/agrios.app.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module external.linked.project.id=\":app\" external.linked.project.path=\"$MODULE_DIR$/../../../app\" external.root.project.path=\"$MODULE_DIR$/../../..\" external.system.id=\"GRADLE\" external.system.module.group=\"agrios\" external.system.module.version=\"unspecified\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet external-system-id=\"GRADLE\" type=\"android-gradle\" name=\"Android-Gradle\">\r\n      <configuration>\r\n        <option name=\"LAST_SUCCESSFUL_SYNC_AGP_VERSION\" />\r\n        <option name=\"LAST_KNOWN_AGP_VERSION\" value=\"8.7.1\" />\r\n      </configuration>\r\n    </facet>\r\n    <facet external-system-id=\"GRADLE\" type=\"android\" name=\"Android\">\r\n      <configuration>\r\n        <option name=\"SELECTED_BUILD_VARIANT\" value=\"debug\" />\r\n        <option name=\"ALLOW_USER_CONFIGURATION\" value=\"false\" />\r\n        <option name=\"MANIFEST_FILE_RELATIVE_PATH\" value=\"/src/main/AndroidManifest.xml\" />\r\n        <option name=\"RES_FOLDER_RELATIVE_PATH\" value=\"/src/main/res\" />\r\n        <option name=\"ASSETS_FOLDER_RELATIVE_PATH\" value=\"/src/main/assets\" />\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$/../../../app\">\r\n      <excludeFolder url=\"file://$MODULE_DIR$/../../../app/.gradle\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/../../../app/build\" />\r\n    </content>\r\n    <orderEntry type=\"jdk\" jdkName=\"Android API 34, extension level 7 Platform\" jdkType=\"Android SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules/app/agrios.app.iml b/.idea/modules/app/agrios.app.iml
+--- a/.idea/modules/app/agrios.app.iml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/.idea/modules/app/agrios.app.iml	(date 1729197182015)
+@@ -3,7 +3,7 @@
+   <component name="FacetManager">
+     <facet external-system-id="GRADLE" type="android-gradle" name="Android-Gradle">
+       <configuration>
+-        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" />
++        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="8.7.1" />
+         <option name="LAST_KNOWN_AGP_VERSION" value="8.7.1" />
+       </configuration>
+     </facet>
+Index: app/src/main/res/layout/activity_loginpage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/background\"\r\n    android:orientation=\"vertical\"\r\n    android:padding=\"16dp\"\r\n    tools:context=\".LoginActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/tvSignupTitle\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:text=\"SWSTIK\"\r\n        android:textColor=\"@color/main\"\r\n        android:textSize=\"40sp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n\r\n    <EditText\r\n        android:id=\"@+id/usernameEditText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"30dp\"\r\n        android:background=\"@drawable/round\"\r\n        android:hint=\"Username\"\r\n        android:inputType=\"textEmailAddress\"\r\n        android:padding=\"12dp\"\r\n        android:textColor=\"@color/black\"\r\n        android:textColorHint=\"@color/black\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/passwordEditText\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:background=\"@drawable/round\"\r\n        android:hint=\"Password\"\r\n        android:inputType=\"textPassword\"\r\n        android:padding=\"12dp\"\r\n        android:textColor=\"@color/black\"\r\n        android:textColorHint=\"@color/black\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnLogin\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"24dp\"\r\n        android:backgroundTint=\"@color/main\"\r\n        android:text=\"Login\"\r\n        android:textColor=\"@color/white\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/signuptxtbtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:padding=\"10dp\"\r\n        android:text=\"Don't have an account? Sign up\"\r\n        android:textColor=\"@color/main\" />\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_loginpage.xml b/app/src/main/res/layout/activity_loginpage.xml
+--- a/app/src/main/res/layout/activity_loginpage.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_loginpage.xml	(date 1729194546963)
+@@ -9,6 +9,13 @@
+     android:padding="16dp"
+     tools:context=".LoginActivity">
+ 
++    <ImageView
++        android:layout_width="100dp"
++        android:layout_height="100dp"
++        android:layout_gravity="center_horizontal"
++        android:layout_marginTop="40dp"
++        android:src="@drawable/logobackground" />
++
+     <TextView
+         android:id="@+id/tvSignupTitle"
+         android:layout_width="wrap_content"
+@@ -17,7 +24,7 @@
+         android:layout_marginTop="30dp"
+         android:text="SWSTIK"
+         android:textColor="@color/main"
+-        android:textSize="40sp"
++        android:textSize="24sp"
+         android:textStyle="bold" />
+ 
+ 
+Index: app/src/main/res/layout/fragment_profile_fargment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_profile_fargment.xml b/app/src/main/res/layout/fragment_profile_fargment.xml
+new file mode 100644
+--- /dev/null	(date 1729197041479)
++++ b/app/src/main/res/layout/fragment_profile_fargment.xml	(date 1729197041479)
+@@ -0,0 +1,148 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".profileFargment">
++
++
++    <RelativeLayout
++        android:id="@+id/maintext"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="@color/main">
++
++        <LinearLayout
++            android:id="@+id/headd"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="20dp"
++            android:background="@color/main">
++
++            <ImageView
++                android:layout_width="100dp"
++                android:layout_height="100dp"
++                android:layout_gravity="center_horizontal"
++                android:src="@drawable/logobackground" />
++
++            <TextView
++                android:id="@+id/headingname"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="13dp"
++                android:background="@color/main"
++                android:padding="20dp"
++                android:text="SWSTIK"
++
++                android:textColor="@color/white"
++                android:textSize="24sp"
++                android:textStyle="bold" />
++        </LinearLayout>
++
++        <RelativeLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_below="@+id/headd"
++            android:background="@color/white">
++
++            <LinearLayout
++                android:id="@+id/linear_layoutprofile"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:background="@color/white"
++                android:gravity="center_vertical"
++                android:padding="20dp">
++
++                <ImageView
++                    android:layout_width="30dp"
++                    android:layout_height="30dp"
++                    android:layout_below="@+id/headingname"
++                    android:src="@drawable/profile" />
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginStart="10dp"
++                    android:text="Hello,  "
++                    android:textSize="17sp" />
++
++                <TextView
++                    android:id="@+id/agritext"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="Name"
++                    android:textSize="17sp" />
++
++            </LinearLayout>
++
++            <LinearLayout
++                android:id="@+id/button1Layout"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_below="@+id/linear_layoutprofile"
++                android:layout_alignParentStart="true"
++                android:layout_marginStart="20dp"
++                android:layout_marginTop="40dp"
++                android:background="@color/white"
++                android:gravity="center"
++                android:orientation="vertical">
++
++                <Button
++                    android:id="@+id/btn_buy_again"
++                    android:layout_width="150dp"
++                    android:layout_height="wrap_content"
++
++                    android:layout_marginBottom="16dp"
++                    android:backgroundTint="@color/main"
++                    android:padding="12dp"
++                    android:text="Buy Again"
++                    android:textColor="@color/white"
++                    android:textSize="16sp" />
++
++                <Button
++                    android:id="@+id/btn_your_lists"
++                    android:layout_width="150dp"
++                    android:layout_height="wrap_content"
++                    android:backgroundTint="@color/main"
++                    android:hapticFeedbackEnabled="true"
++                    android:padding="12dp"
++                    android:text="Your Lists"
++                    android:textColor="@color/white"
++                    android:textSize="16sp" />
++            </LinearLayout>
++
++            <LinearLayout
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_below="@+id/linear_layoutprofile"
++                android:layout_alignParentEnd="true"
++                android:layout_marginTop="40dp"
++                android:layout_toEndOf="@+id/button1Layout"
++                android:background="@color/white"
++                android:gravity="center"
++                android:orientation="vertical">
++
++                <Button
++                    android:id="@+id/btn_your_account"
++                    android:layout_width="150dp"
++                    android:layout_height="wrap_content"
++                    android:layout_marginBottom="16dp"
++                    android:backgroundTint="@color/main"
++                    android:padding="12dp"
++                    android:text="Your Account"
++                    android:textColor="@color/white"
++                    android:textSize="16sp" />
++
++                <Button
++                    android:id="@+id/btn_your_orders"
++                    android:layout_width="150dp"
++                    android:layout_height="wrap_content"
++                    android:backgroundTint="@color/main"
++                    android:padding="12dp"
++                    android:text="Your Orders"
++                    android:textColor="@color/white"
++                    android:textSize="16sp" />
++            </LinearLayout>
++        </RelativeLayout>
++    </RelativeLayout>
++</androidx.core.widget.NestedScrollView>
+\ No newline at end of file
+Index: app/src/main/java/com/abc/agrios/profileFargment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/profileFargment.java b/app/src/main/java/com/abc/agrios/profileFargment.java
+new file mode 100644
+--- /dev/null	(date 1729196807069)
++++ b/app/src/main/java/com/abc/agrios/profileFargment.java	(date 1729196807069)
+@@ -0,0 +1,21 @@
++package com.abc.agrios;
++
++import android.os.Bundle;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import androidx.fragment.app.Fragment;
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++
++class profileFargment extends Fragment {
++
++    @Nullable
++    @Override
++    public View onCreateView(@NonNull LayoutInflater inflater,
++                             @Nullable ViewGroup container,
++                             @Nullable Bundle savedInstanceState) {
++        return inflater.inflate(R.layout.fragment_profile_fargment, container, false);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_signuppage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white\"\r\n    tools:context=\".SignupActivity\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/background\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"16dp\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/tvSignupTitle\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:text=\"SWSTIK\"\r\n            android:textColor=\"@color/main\"\r\n            android:textSize=\"40sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/username\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Username\"\r\n            android:inputType=\"textPersonName\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/password\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Password\"\r\n            android:inputType=\"textPassword\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/email\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Email\"\r\n            android:inputType=\"textEmailAddress\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/mobileNo\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Mobile No.\"\r\n            android:inputType=\"phone\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/name\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Full Name\"\r\n            android:inputType=\"textPersonName\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/pincode\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Pincode\"\r\n            android:inputType=\"number\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/street\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Street\"\r\n            android:inputType=\"text\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/city\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"City\"\r\n            android:inputType=\"text\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/state\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"State\"\r\n            android:inputType=\"text\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/country\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Country\"\r\n            android:inputType=\"text\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/zipCode\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:hint=\"Zip Code\"\r\n            android:inputType=\"number\"\r\n            android:padding=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textColorHint=\"@color/main\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnSignup\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"24dp\"\r\n            android:backgroundTint=\"@color/black\"\r\n            android:text=\"Sign Up\"\r\n            android:textColor=\"@color/white\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/logintxtbtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center\"\r\n            android:layout_marginTop=\"16dp\"\r\n            android:background=\"@drawable/round\"\r\n            android:text=\"Already have an account? Login\"\r\n            android:textColor=\"@color/main\" />\r\n\r\n    </LinearLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_signuppage.xml b/app/src/main/res/layout/activity_signuppage.xml
+--- a/app/src/main/res/layout/activity_signuppage.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_signuppage.xml	(date 1729194990795)
+@@ -161,7 +161,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="24dp"
+-            android:backgroundTint="@color/black"
++            android:backgroundTint="@color/main"
+             android:text="Sign Up"
+             android:textColor="@color/white" />
+ 

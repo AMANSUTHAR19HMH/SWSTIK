@@ -1,0 +1,526 @@
+Index: app/src/main/res/layout/activity_grain.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".grain\">\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n\r\n        <!-- Search Bar -->\r\n        <RelativeLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:padding=\"1dp\"\r\n            android:background=\"#EEE\"\r\n            tools:ignore=\"MissingConstraints\">\r\n\r\n            <Spinner\r\n                android:id=\"@+id/spinner_sort\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_alignParentRight=\"true\"\r\n                android:layout_marginRight=\"9dp\" />\r\n\r\n        </RelativeLayout>\r\n\r\n        <!-- List View -->\r\n        <ListView\r\n            android:id=\"@+id/list_view\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/main\"\r\n            tools:ignore=\"NotSibling\" />\r\n\r\n        <!-- Search Icon -->\r\n        <ImageView\r\n            android:id=\"@+id/search_icon\"\r\n            android:layout_width=\"42dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:src=\"@drawable/search\"\r\n            app:layout_constraintBottom_toBottomOf=\"@id/search_bar\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n        <!-- Search Bar -->\r\n        <EditText\r\n            android:id=\"@+id/search_bar\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:background=\"@color/white\"\r\n            android:hint=\"Search Grains\"\r\n            android:padding=\"10dp\"\r\n            app:layout_constraintBottom_toBottomOf=\"@id/search_icon\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toEndOf=\"@id/search_icon\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:layout_constraintWidth_percent=\"0.85\" />\r\n\r\n        <!-- Dress 1 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress1_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toStartOf=\"@id/dress2_layout\"\r\n            app:layout_constraintHorizontal_bias=\"0.0\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/search_bar\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress1\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/grainbarlley\" />\r\n\r\n                <!-- Heart Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                </LinearLayout>\r\n\r\n                <!-- Star Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress1_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Barlley\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress1_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹250/Kg\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Dress 2 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress2_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toEndOf=\"@id/dress1_layout\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/search_bar\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress2\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/graincorn\" />\r\n\r\n                <!-- Heart Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                </LinearLayout>\r\n\r\n                <!-- Star Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress2_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Corn\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress2_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹30/piece\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Dress 3 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress3_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toStartOf=\"@id/dress4_layout\"\r\n            app:layout_constraintHorizontal_bias=\"0.0\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/dress1_layout\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress3\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/graingram\" />\r\n\r\n                <!-- Heart Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n\r\n                </LinearLayout>\r\n\r\n                <!-- Star Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress3_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Gram\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress3_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹120/Kg\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Dress 4 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress4_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toEndOf=\"@id/dress3_layout\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/dress2_layout\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress4\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/grainmustard\" />\r\n\r\n                <!-- Heart Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n                <!-- Star Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress4_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Mustard\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress4_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹180/Kg\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Dress 5 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress5_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toStartOf=\"@id/dress6_layout\"\r\n            app:layout_constraintHorizontal_bias=\"0.0\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/dress3_layout\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress5\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/grainpea\" />\r\n\r\n                <!-- Heart Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n                <!-- Star Button and Count -->\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress5_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Peas\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress5_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹180/Kg\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Dress 6 -->\r\n        <LinearLayout\r\n            android:id=\"@+id/dress6_layout\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"vertical\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintStart_toEndOf=\"@id/dress5_layout\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/dress4_layout\"\r\n            app:layout_constraintWidth_percent=\"0.5\">\r\n\r\n            <FrameLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/dress6\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"181dp\"\r\n                    android:layout_marginTop=\"16dp\"\r\n                    android:scaleType=\"centerCrop\"\r\n                    android:src=\"@drawable/grainwheat\" />\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|end\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_gravity=\"bottom|start\"\r\n                    android:layout_margin=\"8dp\"\r\n                    android:orientation=\"vertical\">\r\n\r\n\r\n                </LinearLayout>\r\n\r\n            </FrameLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress6_name\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"Wheat\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"16sp\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/dress6_price\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:padding=\"8dp\"\r\n                android:text=\"₹150/Kg\"\r\n                android:textColor=\"@android:color/black\"\r\n                android:textSize=\"14sp\" />\r\n        </LinearLayout>\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_grain.xml b/app/src/main/res/layout/activity_grain.xml
+--- a/app/src/main/res/layout/activity_grain.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_grain.xml	(date 1729194479110)
+@@ -5,6 +5,7 @@
+     android:id="@+id/main"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:padding="3dp"
+     tools:context=".grain">
+ 
+     <androidx.constraintlayout.widget.ConstraintLayout
+@@ -15,8 +16,8 @@
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:padding="1dp"
+             android:background="#EEE"
++            android:padding="1dp"
+             tools:ignore="MissingConstraints">
+ 
+             <Spinner
+@@ -28,7 +29,6 @@
+ 
+         </RelativeLayout>
+ 
+-        <!-- List View -->
+         <ListView
+             android:id="@+id/list_view"
+             android:layout_width="match_parent"
+@@ -85,7 +85,7 @@
+                     android:scaleType="centerCrop"
+                     android:src="@drawable/grainbarlley" />
+ 
+-                <!-- Heart Button and Count -->
++
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+@@ -95,7 +95,7 @@
+ 
+                 </LinearLayout>
+ 
+-                <!-- Star Button and Count -->
++ 
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+@@ -225,7 +225,6 @@
+                     android:orientation="vertical">
+ 
+ 
+-
+                 </LinearLayout>
+ 
+                 <!-- Star Button and Count -->
+@@ -237,7 +236,6 @@
+                     android:orientation="vertical">
+ 
+ 
+-
+                 </LinearLayout>
+ 
+             </FrameLayout>
+Index: app/src/main/res/layout/activity_farmer_signup.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:padding=\"16dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        android:padding=\"16dp\">\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center_horizontal\"\r\n            android:layout_marginBottom=\"24dp\"\r\n            android:text=\"Farmer Registration\"\r\n            android:textSize=\"24sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_username\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Username\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_name\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Full Name\"\r\n            android:inputType=\"textPersonName\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_mobile\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Mobile Number\"\r\n            android:inputType=\"phone\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_email\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Email\"\r\n            android:inputType=\"textEmailAddress\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_password\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Password\"\r\n            android:inputType=\"textPassword\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_pincode\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Pincode\"\r\n            android:inputType=\"number\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_street\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"Street Address\"\r\n            android:inputType=\"text\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_city\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"City\"\r\n            android:inputType=\"text\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_state\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:hint=\"State\"\r\n            android:inputType=\"text\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/et_country\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"24dp\"\r\n            android:hint=\"Country\"\r\n            android:inputType=\"text\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_register\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Register\" />\r\n\r\n    </LinearLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_farmer_signup.xml b/app/src/main/res/layout/activity_farmer_signup.xml
+--- a/app/src/main/res/layout/activity_farmer_signup.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_farmer_signup.xml	(date 1729196369133)
+@@ -2,13 +2,21 @@
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@color/white"
+     android:padding="16dp">
+ 
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:orientation="vertical"
+-        android:padding="16dp">
++        android:layout_marginBottom="33dp"
++        android:background="@color/white"
++        android:orientation="vertical">
++
++        <ImageView
++            android:layout_width="100dp"
++            android:layout_height="100dp"
++            android:layout_gravity="center_horizontal"
++            android:src="@drawable/logobackground" />
+ 
+         <TextView
+             android:layout_width="wrap_content"
+@@ -16,6 +24,7 @@
+             android:layout_gravity="center_horizontal"
+             android:layout_marginBottom="24dp"
+             android:text="Farmer Registration"
++            android:textColor="@color/main"
+             android:textSize="24sp"
+             android:textStyle="bold" />
+ 
+@@ -24,7 +33,8 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+-            android:hint="Username" />
++            android:hint="Username"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_name"
+@@ -32,7 +42,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Full Name"
+-            android:inputType="textPersonName" />
++            android:inputType="textPersonName"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_mobile"
+@@ -40,7 +51,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Mobile Number"
+-            android:inputType="phone" />
++            android:inputType="phone"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_email"
+@@ -48,7 +60,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Email"
+-            android:inputType="textEmailAddress" />
++            android:inputType="textEmailAddress"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_password"
+@@ -56,7 +69,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Password"
+-            android:inputType="textPassword" />
++            android:inputType="textPassword"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_pincode"
+@@ -64,7 +78,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Pincode"
+-            android:inputType="number" />
++            android:inputType="number"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_street"
+@@ -72,7 +87,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="Street Address"
+-            android:inputType="text" />
++            android:inputType="text"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_city"
+@@ -80,7 +96,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="City"
+-            android:inputType="text" />
++            android:inputType="text"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_state"
+@@ -88,7 +105,8 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="16dp"
+             android:hint="State"
+-            android:inputType="text" />
++            android:inputType="text"
++            android:textColorHint="@color/main" />
+ 
+         <EditText
+             android:id="@+id/et_country"
+@@ -96,13 +114,24 @@
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="24dp"
+             android:hint="Country"
+-            android:inputType="text" />
++            android:inputType="text"
++            android:textColorHint="@color/main" />
+ 
+         <Button
+             android:id="@+id/btn_register"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
++            android:backgroundTint="@color/main"
+             android:text="Register" />
+ 
++        <TextView
++            android:id="@+id/tvLoginfarmer"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center_horizontal"
++            android:layout_marginBottom="24dp"
++            android:text="Login"
++            android:textColor="@color/main"
++            android:textStyle="bold" />
+     </LinearLayout>
+ </ScrollView>
+Index: app/src/main/res/layout/activity_marketprice.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/mainLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Marketprice\"\r\n    android:layout_marginBottom=\"40dp\">\r\n\r\n    <!-- Header Section -->\r\n    <RelativeLayout\r\n        android:id=\"@+id/headerLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/main\">\r\n\r\n        <!-- AppBarLayout with Toolbar -->\r\n        <com.google.android.material.appbar.AppBarLayout\r\n            android:id=\"@+id/appBarLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/main\"\r\n                android:title=\"Header Title\"\r\n                app:menu=\"@menu/appbar\"\r\n                app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n                <!-- Logo ImageView -->\r\n                <ImageView\r\n                    android:id=\"@+id/logoImageView\"\r\n                    android:layout_width=\"40dp\"\r\n                    android:layout_height=\"40dp\"\r\n                    android:src=\"@drawable/logo\" />\r\n\r\n                <!-- Title TextView -->\r\n                <TextView\r\n                    android:id=\"@+id/headerTitleTextView\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:padding=\"20dp\"\r\n                    android:text=\"Apna Kisan Apna Bazar\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textStyle=\"bold\" />\r\n            </androidx.appcompat.widget.Toolbar>\r\n\r\n        </com.google.android.material.appbar.AppBarLayout>\r\n    </RelativeLayout>\r\n\r\n    <!-- Product List TextView -->\r\n    <TextView\r\n        android:id=\"@+id/productListTextView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"42dp\"\r\n        android:layout_below=\"@id/headerLayout\"\r\n        android:background=\"#E3E4E3\"\r\n        android:text=\"Market Price\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/black\"\r\n        android:textSize=\"25dp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n</RelativeLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_marketprice.xml b/app/src/main/res/layout/activity_marketprice.xml
+--- a/app/src/main/res/layout/activity_marketprice.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_marketprice.xml	(date 1729194681028)
+@@ -5,8 +5,8 @@
+     android:id="@+id/mainLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".Marketprice"
+-    android:layout_marginBottom="40dp">
++    android:layout_marginBottom="40dp"
++    tools:context=".Marketprice">
+ 
+     <!-- Header Section -->
+     <RelativeLayout
+@@ -37,7 +37,7 @@
+                     android:id="@+id/logoImageView"
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+-                    android:src="@drawable/logo" />
++                    android:src="@drawable/logoappbart" />
+ 
+                 <!-- Title TextView -->
+                 <TextView
+Index: app/src/main/res/layout/activity_choice.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".ChoiceActivity\">\r\n\r\n    <ImageView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:src=\"@drawable/logo\" />\r\n\r\n    <Button\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"40dp\"\r\n        android:layout_marginTop=\"500dp\"\r\n        android:backgroundTint=\"@color/main\"\r\n        android:text=\"Producer\"\r\n        android:textColor=\"@color/white\"\r\n        android:textStyle=\"bold\" />\r\n\r\n    <Button\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_marginTop=\"500dp\"\r\n        android:layout_marginEnd=\"40dp\"\r\n        android:backgroundTint=\"@color/main\"\r\n        android:text=\"\"\r\n        android:textColor=\"@color/white\"\r\n        android:textStyle=\"bold\" />\r\n\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_choice.xml b/app/src/main/res/layout/activity_choice.xml
+--- a/app/src/main/res/layout/activity_choice.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_choice.xml	(date 1729195370198)
+@@ -9,26 +9,28 @@
+     <ImageView
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:src="@drawable/logo" />
++        android:src="@drawable/logobackground" />
+ 
+     <Button
++        android:id="@+id/farmer1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginStart="40dp"
++        android:layout_marginStart="49dp"
+         android:layout_marginTop="500dp"
+         android:backgroundTint="@color/main"
+-        android:text="Producer"
++        android:text="Farmer"
+         android:textColor="@color/white"
+         android:textStyle="bold" />
+ 
+     <Button
++        android:id="@+id/buyer1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentEnd="true"
+         android:layout_marginTop="500dp"
+-        android:layout_marginEnd="40dp"
++        android:layout_marginEnd="49dp"
+         android:backgroundTint="@color/main"
+-        android:text=""
++        android:text="Buyer"
+         android:textColor="@color/white"
+         android:textStyle="bold" />
+ 
+Index: app/src/main/res/layout/activity_productlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/mainLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".productlist\"\r\n    android:layout_marginBottom=\"40dp\">\r\n\r\n    <!-- Header Section -->\r\n    <RelativeLayout\r\n        android:id=\"@+id/headerLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/main\">\r\n\r\n        <!-- AppBarLayout with Toolbar -->\r\n        <com.google.android.material.appbar.AppBarLayout\r\n            android:id=\"@+id/appBarLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/main\"\r\n                android:title=\"Header Title\"\r\n                app:menu=\"@menu/appbar\"\r\n                app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n                <!-- Logo ImageView -->\r\n                <ImageView\r\n                    android:id=\"@+id/logoImageView\"\r\n                    android:layout_width=\"40dp\"\r\n                    android:layout_height=\"40dp\"\r\n                    android:src=\"@drawable/logo\" />\r\n\r\n                <!-- Title TextView -->\r\n                <TextView\r\n                    android:id=\"@+id/headerTitleTextView\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:padding=\"20dp\"\r\n                    android:text=\"Apna Kisan Apna Bazar\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textStyle=\"bold\" />\r\n            </androidx.appcompat.widget.Toolbar>\r\n\r\n        </com.google.android.material.appbar.AppBarLayout>\r\n    </RelativeLayout>\r\n\r\n    <!-- Product List TextView -->\r\n    <TextView\r\n        android:id=\"@+id/productListTextView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"42dp\"\r\n        android:layout_below=\"@id/headerLayout\"\r\n        android:background=\"#E3E4E3\"\r\n        android:text=\"Product List\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/black\"\r\n        android:textSize=\"25dp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n</RelativeLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_productlist.xml b/app/src/main/res/layout/activity_productlist.xml
+--- a/app/src/main/res/layout/activity_productlist.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_productlist.xml	(date 1729194713054)
+@@ -5,8 +5,8 @@
+     android:id="@+id/mainLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".productlist"
+-    android:layout_marginBottom="40dp">
++    android:layout_marginBottom="40dp"
++    tools:context=".productlist">
+ 
+     <!-- Header Section -->
+     <RelativeLayout
+@@ -37,7 +37,7 @@
+                     android:id="@+id/logoImageView"
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+-                    android:src="@drawable/logo" />
++                    android:src="@drawable/logoappbart" />
+ 
+                 <!-- Title TextView -->
+                 <TextView
+Index: app/src/main/res/layout/activity_bidlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/mainLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".bidlist\"\r\n    android:layout_marginBottom=\"40dp\">\r\n\r\n    <!-- Header Section -->\r\n    <RelativeLayout\r\n        android:id=\"@+id/headerLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/main\">\r\n\r\n        <!-- AppBarLayout with Toolbar -->\r\n        <com.google.android.material.appbar.AppBarLayout\r\n            android:id=\"@+id/appBarLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/main\"\r\n                android:title=\"Header Title\"\r\n                app:menu=\"@menu/appbar\"\r\n                app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n                <!-- Logo ImageView -->\r\n                <ImageView\r\n                    android:id=\"@+id/logoImageView\"\r\n                    android:layout_width=\"40dp\"\r\n                    android:layout_height=\"40dp\"\r\n                    android:src=\"@drawable/logo\" />\r\n\r\n                <!-- Title TextView -->\r\n                <TextView\r\n                    android:id=\"@+id/headerTitleTextView\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:padding=\"20dp\"\r\n                    android:text=\"Apna Kisan Apna Bazar\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textStyle=\"bold\" />\r\n            </androidx.appcompat.widget.Toolbar>\r\n\r\n        </com.google.android.material.appbar.AppBarLayout>\r\n    </RelativeLayout>\r\n\r\n    <!-- Product List TextView -->\r\n    <TextView\r\n        android:id=\"@+id/productListTextView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"42dp\"\r\n        android:layout_below=\"@id/headerLayout\"\r\n        android:background=\"#E3E4E3\"\r\n        android:text=\"Bid List\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/black\"\r\n        android:textSize=\"25dp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n</RelativeLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_bidlist.xml b/app/src/main/res/layout/activity_bidlist.xml
+--- a/app/src/main/res/layout/activity_bidlist.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_bidlist.xml	(date 1729193403069)
+@@ -37,7 +37,7 @@
+                     android:id="@+id/logoImageView"
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+-                    android:src="@drawable/logo" />
++                    android:src="@drawable/logoappbart" />
+ 
+                 <!-- Title TextView -->
+                 <TextView
+Index: app/src/main/res/layout/activity_meetfarmers.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:layout_marginBottom=\"44dp\"\r\n    tools:context=\".meetfarmers\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n\r\n        <RelativeLayout\r\n            android:id=\"@+id/headerLayout\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:background=\"@color/main\">\r\n\r\n            <com.google.android.material.appbar.AppBarLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"30dp\"\r\n                android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n                <androidx.appcompat.widget.Toolbar\r\n                    android:id=\"@+id/toolbar\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:background=\"@color/main\"\r\n                    android:title=\"Header Title\"\r\n                    app:menu=\"@menu/appbar\"\r\n                    app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\">\r\n\r\n                    <ImageView\r\n                        android:id=\"@+id/logoImage\"\r\n                        android:layout_width=\"40dp\"\r\n                        android:layout_height=\"40dp\"\r\n                        android:src=\"@drawable/logo\" />\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/titleText\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:padding=\"20dp\"\r\n                        android:text=\"Apna Kisan Apna Bazar\"\r\n                        android:textColor=\"@color/white\"\r\n                        android:textStyle=\"bold\" />\r\n                </androidx.appcompat.widget.Toolbar>\r\n            </com.google.android.material.appbar.AppBarLayout>\r\n        </RelativeLayout>\r\n\r\n        <TextView\r\n            android:id=\"@+id/meetFarmersText\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"42dp\"\r\n            android:layout_below=\"@id/headerLayout\"\r\n            android:background=\"#E3E4E3\"\r\n            android:text=\"Meet Our Farmers\"\r\n            android:textAlignment=\"center\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"35dp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/farmerImage\"\r\n            android:layout_width=\"169dp\"\r\n            android:layout_height=\"151dp\"\r\n            android:layout_below=\"@id/meetFarmersText\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:layout_marginTop=\"27dp\"\r\n            android:scaleType=\"centerCrop\"\r\n            app:srcCompat=\"@drawable/farmer3\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/farmerName\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/farmerImage\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:text=\"Mr. Mohan Lal\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"italic\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/farmerBio\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/farmerName\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:text=\"Hi! I am Mohan Lal.....[BIO]\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/productListTitle\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/farmerBio\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:text=\"Product List:\"\r\n            android:textSize=\"25dp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/product1\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/productListTitle\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Product 1\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/product2\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/product1\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Product 2\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/product3\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/product2\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Product 3\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/product4\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/product3\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Product 4\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/bidListTitle\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/product4\"\r\n            android:layout_marginTop=\"25dp\"\r\n            android:text=\"Bid List:\"\r\n            android:textSize=\"25dp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/highestBid\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/bidListTitle\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Highest Bid I Get\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n        <TextView\r\n            android:id=\"@+id/moderatebid\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/highestBid\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Moderate Bid I Get\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n        <TextView\r\n            android:id=\"@+id/leastbid\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/moderatebid\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:text=\"Lowest Bid I Get\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\" />\r\n    </RelativeLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_meetfarmers.xml b/app/src/main/res/layout/activity_meetfarmers.xml
+--- a/app/src/main/res/layout/activity_meetfarmers.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_meetfarmers.xml	(date 1729194697078)
+@@ -36,7 +36,7 @@
+                         android:id="@+id/logoImage"
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+-                        android:src="@drawable/logo" />
++                        android:src="@drawable/logoappbart" />
+ 
+                     <TextView
+                         android:id="@+id/titleText"
+@@ -78,8 +78,8 @@
+             android:layout_height="wrap_content"
+             android:layout_below="@id/farmerImage"
+             android:layout_centerHorizontal="true"
+-            android:text="Mr. Mohan Lal"
+             android:layout_marginTop="20dp"
++            android:text="Mr. Mohan Lal"
+             android:textColor="@color/black"
+             android:textSize="18sp"
+             android:textStyle="italic" />
+@@ -164,6 +164,7 @@
+             android:text="Highest Bid I Get"
+             android:textColor="@color/black"
+             android:textSize="18sp" />
++
+         <TextView
+             android:id="@+id/moderatebid"
+             android:layout_width="wrap_content"
+@@ -173,6 +174,7 @@
+             android:text="Moderate Bid I Get"
+             android:textColor="@color/black"
+             android:textSize="18sp" />
++
+         <TextView
+             android:id="@+id/leastbid"
+             android:layout_width="wrap_content"
+Index: app/src/main/res/layout/activity_farmerhomepage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/background\"\r\n    android:fillViewport=\"true\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:padding=\"1dp\">\r\n\r\n        <!-- AppBar Layout -->\r\n        <com.google.android.material.appbar.AppBarLayout\r\n            android:id=\"@+id/app_bar\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"30dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\">\r\n\r\n            <androidx.appcompat.widget.Toolbar\r\n                android:id=\"@+id/toolbar\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@color/main\"\r\n                android:title=\"Header Title\">\r\n\r\n                <ImageView\r\n                    android:layout_width=\"40dp\"\r\n                    android:layout_height=\"40dp\"\r\n                    android:src=\"@drawable/logo\" />\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:padding=\"20dp\"\r\n                    android:text=\"Apna Kisan Apna Bazar\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textStyle=\"bold\" />\r\n            </androidx.appcompat.widget.Toolbar>\r\n        </com.google.android.material.appbar.AppBarLayout>\r\n\r\n        <!-- Profile Section -->\r\n        <LinearLayout\r\n            android:id=\"@+id/linear_layoutprofile\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/app_bar\"\r\n            android:background=\"@color/background\"\r\n            android:gravity=\"center_vertical\"\r\n            android:orientation=\"horizontal\"\r\n            android:padding=\"20dp\">\r\n\r\n            <ImageView\r\n                android:layout_width=\"30dp\"\r\n                android:layout_height=\"30dp\"\r\n                android:src=\"@drawable/profile\" />\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"10dp\"\r\n                android:text=\"Hello, \"\r\n                android:textSize=\"17sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/agritext\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:text=\"Farmer's Name\"\r\n                android:textSize=\"17sp\"\r\n                android:textStyle=\"bold\" />\r\n        </LinearLayout>\r\n\r\n        <!-- Buttons Section -->\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/linear_layoutprofile\"\r\n            android:layout_marginTop=\"10dp\"\r\n            android:gravity=\"center\"\r\n            android:orientation=\"vertical\"\r\n            android:padding=\"16dp\">\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginBottom=\"10dp\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/button12\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Product List\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"16.97sp\" />\r\n\r\n                <Button\r\n                    android:id=\"@+id/button13\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Bid List\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"17sp\" />\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginBottom=\"10dp\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/button14\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Assistance Loan\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"17sp\" />\r\n\r\n                <Button\r\n                    android:id=\"@+id/button15\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Weather Prediction\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"17sp\" />\r\n            </LinearLayout>\r\n\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <Button\r\n                    android:id=\"@+id/button16\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Market Price\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"17sp\" />\r\n\r\n                <Button\r\n                    android:id=\"@+id/button17\"\r\n                    android:layout_width=\"147dp\"\r\n                    android:layout_height=\"115dp\"\r\n                    android:layout_margin=\"10dp\"\r\n                    android:backgroundTint=\"@color/main\"\r\n                    android:text=\"Community\"\r\n                    android:textColor=\"@color/white\"\r\n                    android:textSize=\"17sp\" />\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n    </RelativeLayout>\r\n</ScrollView>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_farmerhomepage.xml b/app/src/main/res/layout/activity_farmerhomepage.xml
+--- a/app/src/main/res/layout/activity_farmerhomepage.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/res/layout/activity_farmerhomepage.xml	(date 1729194417937)
+@@ -28,7 +28,7 @@
+                 <ImageView
+                     android:layout_width="40dp"
+                     android:layout_height="40dp"
+-                    android:src="@drawable/logo" />
++                    android:src="@drawable/logoappbart" />
+ 
+                 <TextView
+                     android:layout_width="wrap_content"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.Agrios\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".farmerhomepage\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".grain\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".freshfruits\"\r\n            android:exported=\"true\">\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".organicvegetables\"\r\n            android:exported=\"true\" />\r\n        <activity\r\n            android:name=\".FarmerLoginActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".FarmerSignupActivity\"\r\n            android:exported=\"true\">\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".ChoiceActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".settingsActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"true\">\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".profile\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".homeActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".SignupActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".LoginActivity\"\r\n            android:exported=\"true\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/AndroidManifest.xml	(date 1729194078955)
+@@ -18,10 +18,14 @@
+         tools:targetApi="31">
+         <activity
+             android:name=".farmerhomepage"
+-            android:exported="false" />
++            android:exported="true">
++
++        </activity>
+         <activity
+             android:name=".grain"
+-            android:exported="false" />
++            android:exported="true">
++
++        </activity>
+         <activity
+             android:name=".freshfruits"
+             android:exported="true">
+@@ -29,15 +33,13 @@
+         </activity>
+         <activity
+             android:name=".organicvegetables"
+-            android:exported="true" />
++            android:exported="true">
++
++        </activity>
+         <activity
+             android:name=".FarmerLoginActivity"
+             android:exported="true">
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+ 
+-                <category android:name="android.intent.category.LAUNCHER" />
+-            </intent-filter>
+         </activity>
+         <activity
+             android:name=".FarmerSignupActivity"
+@@ -46,7 +48,13 @@
+         </activity>
+         <activity
+             android:name=".ChoiceActivity"
+-            android:exported="false" />
++            android:exported="true">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
+         <activity
+             android:name=".settingsActivity"
+             android:exported="false" />
+@@ -57,10 +65,16 @@
+         </activity>
+         <activity
+             android:name=".profile"
+-            android:exported="false" />
++            android:exported="true">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++        </activity>
+         <activity
+             android:name=".homeActivity"
+-            android:exported="false" />
++            android:exported="true"></activity>
+         <activity
+             android:name=".SignupActivity"
+             android:exported="false" />
+@@ -68,5 +82,4 @@
+             android:name=".LoginActivity"
+             android:exported="true" />
+     </application>
+-
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/com/abc/agrios/LoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.abc.agrios;\r\n\r\nimport android.content.Intent;\r\nimport android.content.SharedPreferences;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.abc.agrios.apiInterface.AuthApi;\r\nimport com.abc.agrios.apirequest.LoginRequest;\r\nimport com.abc.agrios.response.LoginResponse;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class LoginActivity extends AppCompatActivity {\r\n\r\n    private EditText usernameEditText;\r\n    private EditText passwordEditText;\r\n    private Button btnLogin;\r\n    private TextView signUpTextView;\r\n    private AuthApi apiService;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_loginpage);\r\n\r\n        usernameEditText = findViewById(R.id.usernameEditText);\r\n        passwordEditText = findViewById(R.id.passwordEditText);\r\n        btnLogin = findViewById(R.id.btnLogin);\r\n        signUpTextView = findViewById(R.id.signuptxtbtn);\r\n\r\n        // Initialize Retrofit\r\n        Retrofit retrofit = new Retrofit.Builder()\r\n                .baseUrl(\"https://onlinesbii.live/api/\")  // Your actual base URL\r\n                .addConverterFactory(GsonConverterFactory.create())\r\n                .build();\r\n\r\n        apiService = retrofit.create(AuthApi.class);\r\n\r\n        // Set up the login button click listener\r\n        btnLogin.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                String username = usernameEditText.getText().toString().trim();\r\n                String password = passwordEditText.getText().toString().trim();\r\n\r\n                // Validate inputs (simple validation)\r\n                if (username.isEmpty() || password.isEmpty()) {\r\n                    Toast.makeText(LoginActivity.this, \"Please fill all fields\", Toast.LENGTH_SHORT).show();\r\n                    return;\r\n                }\r\n\r\n                // Perform login request\r\n                loginUser(username, password);\r\n            }\r\n        });\r\n\r\n        // Set up the sign-up text view click listener\r\n        signUpTextView.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                // Navigate to sign-up page\r\n                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n    }\r\n\r\n    private void loginUser(String username, String password) {\r\n        LoginRequest loginRequest = new LoginRequest(username, password);\r\n\r\n        Call<LoginResponse> call = apiService.loginUser(loginRequest);\r\n        call.enqueue(new Callback<LoginResponse>() {\r\n            @Override\r\n            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {\r\n                if (response.isSuccessful() && response.body() != null) {\r\n                    // Get the token and user role from the response\r\n                    LoginResponse loginResponse = response.body();\r\n                    String token = loginResponse.getToken();\r\n                    String userRole = loginResponse.getUserRole();\r\n\r\n                    // Store the token in SharedPreferences\r\n                    saveToken(token);\r\n\r\n                    // Optionally: Use userRole to direct the user to different activities based on their role\r\n                    Toast.makeText(LoginActivity.this, \"Login Successful\", Toast.LENGTH_SHORT).show();\r\n\r\n                    // Start the home activity\r\n                    Intent intent = new Intent(LoginActivity.this, homeActivity.class);\r\n                    intent.putExtra(\"token\", token);\r\n                    startActivity(intent);\r\n                    finish();\r\n                } else {\r\n                    // Login failed\r\n                    Toast.makeText(LoginActivity.this, \"Invalid username or password\", Toast.LENGTH_SHORT).show();\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<LoginResponse> call, Throwable t) {\r\n                // Error in making the request\r\n                Toast.makeText(LoginActivity.this, \"Login failed: \" + t.getMessage(), Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n    private void saveToken(String token) {\r\n        // Use SharedPreferences to store the token\r\n        SharedPreferences sharedPreferences = getSharedPreferences(\"MyAppPrefs\", MODE_PRIVATE);\r\n        SharedPreferences.Editor editor = sharedPreferences.edit();\r\n        editor.putString(\"auth_token\", token);\r\n        boolean isSaved = editor.commit(); // Save immediately\r\n        if (isSaved) {\r\n            Log.d(\"LoginActivity\", \"Token saved successfully: \" + token);\r\n        } else {\r\n            Log.d(\"LoginActivity\", \"Failed to save token\");\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/abc/agrios/LoginActivity.java b/app/src/main/java/com/abc/agrios/LoginActivity.java
+--- a/app/src/main/java/com/abc/agrios/LoginActivity.java	(revision be5656f82fdae769a0488f382229087b7f89e219)
++++ b/app/src/main/java/com/abc/agrios/LoginActivity.java	(date 1729195782269)
+@@ -61,12 +61,11 @@
+                     return;
+                 }
+ 
+-                // Perform login request
++
+                 loginUser(username, password);
+             }
+         });
+ 
+-        // Set up the sign-up text view click listener
+         signUpTextView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
