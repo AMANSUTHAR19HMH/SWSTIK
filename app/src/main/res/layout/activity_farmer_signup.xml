@@ -16,6 +16,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
             android:text="Farmer Registration"
+            android:textColor="@color/main"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -102,7 +103,21 @@
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/main"
             android:text="Register" />
+
+        <TextView
+            android:id="@+id/tvhave_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center"
+            android:text="Login"
+            android:textAllCaps="true"
+            android:textColor="@color/main"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>

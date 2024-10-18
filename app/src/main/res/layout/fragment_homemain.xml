@@ -76,7 +76,7 @@
                             android:src="@drawable/agriproducts1" />
 
                         <TextView
-                            android:id="@+id/agriprotext"
+                            android:id="@+id/grainstxtbtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/agriproimm"
@@ -110,7 +110,7 @@
                             android:src="@drawable/organic" />
 
                         <TextView
-                            android:id="@+id/organicprotext"
+                            android:id="@+id/organictxtbtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/organicproimm"
@@ -138,17 +138,17 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/veggiesimm"
+                            android:id="@+id/fruitsbtnimg"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:scaleType="centerCrop"
                             android:src="@drawable/freshvege" />
 
                         <TextView
-                            android:id="@+id/veggiestext"
+                            android:id="@+id/fruittxtbtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/veggiesimm"
+                            android:layout_below="@id/fruitsbtnimg"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="Fresh Fruits"

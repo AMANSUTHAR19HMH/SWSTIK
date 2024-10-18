@@ -9,6 +9,13 @@
     android:padding="16dp"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logobackground" />
+
     <TextView
         android:id="@+id/tvSignupTitle"
         android:layout_width="wrap_content"
@@ -17,7 +24,7 @@
         android:layout_marginTop="30dp"
         android:text="SWSTIK"
         android:textColor="@color/main"
-        android:textSize="40sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 

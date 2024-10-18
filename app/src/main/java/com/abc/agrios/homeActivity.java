@@ -36,9 +36,7 @@ public class homeActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.nav_cart) {
                     selectedFragment = new cartFragment();
                 } else if (item.getItemId() == R.id.nav_profile) {
-                    Intent menuIntent = new Intent(homeActivity.this, profile.class);
-                    startActivity(menuIntent);
-                    return true;
+                    selectedFragment = new profileFargment();
                 } else if (item.getItemId() == R.id.nav_settings) {
                     Intent menuIntent = new Intent(homeActivity.this, settingsActivity.class);
                     startActivity(menuIntent);

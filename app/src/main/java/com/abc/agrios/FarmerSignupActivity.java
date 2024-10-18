@@ -1,11 +1,13 @@
 package com.abc.agrios;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ public class FarmerSignupActivity extends AppCompatActivity {
 
     private EditText etUsername, etName, etMobile, etEmail, etPassword, etPincode;
     private EditText etStreet, etCity, etState, etCountry;
+    private TextView tvLogin;
     private Button btnRegister;
     private AuthApi apiService;
 
@@ -30,6 +33,7 @@ public class FarmerSignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_farmer_signup);
 
         // Initialize UI elements
+        tvLogin = findViewById(R.id.tvhave_account);
         etUsername = findViewById(R.id.et_username);
         etName = findViewById(R.id.et_name);
         etMobile = findViewById(R.id.et_mobile);
@@ -49,6 +53,9 @@ public class FarmerSignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 registerFarmer();
             }
+        });
+        tvLogin.setOnClickListener(v -> {
+            startActivity(new Intent(FarmerSignupActivity.this, FarmerLoginActivity.class));
         });
     }
 

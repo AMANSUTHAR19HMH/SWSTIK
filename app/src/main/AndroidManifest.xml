@@ -33,11 +33,7 @@
         <activity
             android:name=".FarmerLoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".FarmerSignupActivity"
@@ -46,7 +42,13 @@
         </activity>
         <activity
             android:name=".ChoiceActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".settingsActivity"
             android:exported="false" />

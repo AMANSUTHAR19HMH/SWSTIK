@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,23 +23,37 @@ public class FarmerLoginActivity extends AppCompatActivity {
 
     private EditText etUsername, etPassword;
     private Button btnLogin;
+    private TextView tvSignUp;
     private AuthApi apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farmer_login);
-
-
+        tvSignUp = findViewById(R.id.tv_dont_have_account);
         etUsername = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
-
+tvSignUp.setOnClickListener(new View.OnClickListener(){
+    @Override
+    public  void onClick(View v){
+        Intent intent = new Intent(FarmerLoginActivity.this,FarmerSignupActivity.class);
+        startActivity(intent);
+    }
+});
 
         apiService = ApiClient.getClient().create(AuthApi.class);
 
-        // Set login button click listener
+
         btnLogin.setOnClickListener(v -> loginFarmer());
+        tvSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(FarmerLoginActivity.this, FarmerSignupActivity.class));
+
+            }
+        });
     }
 
     private void loginFarmer() {
