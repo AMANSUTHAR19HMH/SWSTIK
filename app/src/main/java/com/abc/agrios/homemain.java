@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 public class homemain extends Fragment {
 
-    private TextView tvGrain, tvFruits, tvOrganic;
+    private TextView tvGrain, tvFruits, tvOrganic, farmertxtbtn;
 
     @Nullable
     @Override
@@ -28,6 +28,7 @@ public class homemain extends Fragment {
         tvGrain = view.findViewById(R.id.grainstxtbtn);
         tvFruits = view.findViewById(R.id.fruittxtbtn);
         tvOrganic = view.findViewById(R.id.organictxtbtn);
+        farmertxtbtn = view.findViewById(R.id.farmertxtbtn);
 
         // Set click listeners for TextView elements
         tvGrain.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +42,13 @@ public class homemain extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), freshfruits.class);
+                startActivity(intent);
+            }
+        });
+        farmertxtbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), meetfarmers.class);
                 startActivity(intent);
             }
         });

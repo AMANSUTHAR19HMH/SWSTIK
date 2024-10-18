@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <LinearLayout
+        android:id="@+id/lstate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:text="State"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/commodity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="Commodity"
+            android:textAlignment="textEnd"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/district"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lstate"
+        android:text="District" />
+
+    <TextView
+        android:id="@+id/market"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/district"
+        android:text="Market" />
+
+
+    <TextView
+        android:id="@+id/variety"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lstate"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:text="Variety" />
+
+    <TextView
+        android:id="@+id/grade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/variety"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="Grade" />
+
+    <TextView
+        android:id="@+id/arrivalDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/market"
+        android:layout_alignTop="@+id/modalPrice"
+        android:text="Arrival Date" />
+
+    <TextView
+        android:id="@+id/minPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modalPrice"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="Min Price"
+        android:textColor="#FF0000" />
+
+    <TextView
+        android:id="@+id/maxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grade"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="Max Price"
+        android:textColor="#2EFF00" />
+
+    <TextView
+        android:id="@+id/modalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/maxPrice"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:text="Modal Price"
+        android:textColor="@color/black" />
+
+</RelativeLayout>

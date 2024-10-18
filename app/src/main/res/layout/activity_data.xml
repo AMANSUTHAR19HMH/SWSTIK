@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Title for the data overview -->
+    <TextView
+        android:id="@+id/tvDataTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Data Overview"
+        android:textColor="@color/black"
+
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+    <!-- Display crop name -->
+    <TextView
+        android:id="@+id/tvCropName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Crop Name: Not Available"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <!-- Display crop price -->
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Price: Not Available"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <!-- Horizontal scroll view to make the graph scrollable -->
+
+    <!-- Graph view to display the price trend -->
+
+
+    <Button
+        android:id="@+id/btnRefreshData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#1E054E"
+        android:text="Refresh Data" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#1E054E"
+        android:text=" Set Aert" />
+</LinearLayout>

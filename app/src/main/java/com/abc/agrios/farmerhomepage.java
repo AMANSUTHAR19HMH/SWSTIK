@@ -7,6 +7,9 @@ import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.abc.agrios.market.CropData;
+import com.abc.agrios.weather.WeatherConditionsActivity;
+
 public class farmerhomepage extends AppCompatActivity {
     Button assistant, product, bid, weather, community, market;
 
@@ -27,9 +30,11 @@ public class farmerhomepage extends AppCompatActivity {
         bid.setOnClickListener(v -> {
             startActivity(new Intent(farmerhomepage.this, bidlist.class));
         });
-
+        weather.setOnClickListener(v -> {
+            startActivity(new Intent(farmerhomepage.this, WeatherConditionsActivity.class));
+        });
         market.setOnClickListener(v -> {
-            startActivity(new Intent(farmerhomepage.this, productlist.class));
+            startActivity(new Intent(farmerhomepage.this, CropData.class));
         });
     }
 }
